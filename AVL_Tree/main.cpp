@@ -391,7 +391,7 @@ public:
                     break;
                 }
                 case 6: {
-                    cout << "Exiting...\n";
+                    cout << "Exiting...\n\n";
                     break;
                 }
                 default: {
@@ -404,8 +404,44 @@ public:
 
 int main()
 {
-    AvlAdressBook book;
-    book.showMenu();
+    cout << "   --Hello--  \n";
+    int choice;
 
-    return 0;
+    do {
+        AvlAdressBook book;
+        cout << "Would you like to input your test cases\n1. manual\n2. from file\n3. Exit\nselect (1-3): ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                book.showMenu();
+                break;
+            }
+            case 2: {
+                ifstream file("test_cases.txt");
+                if (!file.is_open()) {
+                    cout << "Failed to open test_cases.txt\n";
+                    break;
+                }
+
+                streambuf* originalCin = cin.rdbuf();
+                cin.rdbuf(file.rdbuf());
+
+                book.showMenu();
+                cin.rdbuf(originalCin);
+                file.close();
+                break;
+            }
+            case 3: {
+                cout << "Exiting...\n\n";
+                break;
+            }
+            default: {
+                cout << "Invalid choice. Please try again.\n";
+            }
+        }
+
+    } while (choice != 3);
+
+
 }
